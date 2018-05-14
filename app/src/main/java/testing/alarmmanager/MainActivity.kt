@@ -1,7 +1,7 @@
 package testing.alarmmanager
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import io.paperdb.Paper
 
@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Helpers.setAlarm(this, Constants.INTERVAL_ALARM)
         val records = Paper.book().read<List<Record>>(Constants.KEY_RECORDS, mutableListOf())
+
+        // Print out some record information
         Log.e(LOG_TAG, "NUMBER OF RECORDS: ${records.size}")
         if (!records.isEmpty()) {
             Log.e(LOG_TAG, "*** LAST EXECUTIONS ***")

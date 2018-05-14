@@ -11,9 +11,14 @@ class Receiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.e(LOG_TAG, "HIT RECEIVER!")
-        //val jobIntent = Intent(context!!, SurpriseJobIntentService::class.java)
-        //SurpriseJobIntentService.enqueueWork(context, jobIntent)
-        Helpers.setAlarm(context!!, Constants.INTERVAL_ALARM)
+        executeWork(context!!)
+        //Helpers.setAlarm(context!!, Constants.INTERVAL_ALARM)
+    }
+
+    // Example of enqueuing JobIntentService
+    private fun executeWork(context: Context) {
+        val jobIntent = Intent(context, SurpriseJobIntentService::class.java)
+        SurpriseJobIntentService.enqueueWork(context, jobIntent)
     }
 
 }
