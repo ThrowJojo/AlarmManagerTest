@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Helpers.setAlarm(this, Constants.INTERVAL_ALARM)
-        val records = Paper.book().read<List<Record>>("records", mutableListOf())
+        val records = Paper.book().read<List<Record>>(Constants.KEY_RECORDS, mutableListOf())
         Log.e(LOG_TAG, "NUMBER OF RECORDS: ${records.size}")
         if (!records.isEmpty()) {
             Log.e(LOG_TAG, "*** LAST EXECUTIONS ***")

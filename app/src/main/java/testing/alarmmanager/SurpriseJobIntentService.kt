@@ -13,16 +13,14 @@ class SurpriseJobIntentService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
         val current = System.currentTimeMillis()
         Log.e(LOG_TAG, "SURPRISE EXECUTED AT: $current, SETTING ANOTHER ALARM!")
+
         val record = Record(current)
-
         var savedRecords = mutableListOf<Record>()
-
-        if (Paper.book().contains("records")) {
-            savedRecords = Paper.book().read<MutableList<Record>>("records")
+        if (Paper.book().contains(Constants.KEY_RECORDS)) {
+            savedRecords = Paper.book().read<MutableList<Record>>(Constants.KEY_RECORDS)
         }
-
         savedRecords.add(record)
-        Paper.book().write("records", savedRecords)
+        Paper.book().write(Constants.KEY_RECORDS, savedRecords)
         Helpers.setAlarm(this, Constants.INTERVAL_ALARM)
     }
 
