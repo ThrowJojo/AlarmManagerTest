@@ -12,14 +12,22 @@ class Receiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.e(LOG_TAG, "HIT RECEIVER!")
-        //executeWork(context!!)
-        executeAsyncWork(context!!)
+        executeWork(context!!)
+        //executeAsyncWork(context!!)
     }
 
     // Example of enqueuing JobIntentService
     private fun executeWork(context: Context) {
-        val jobIntent = Intent(context, SurpriseJobIntentService::class.java)
-        SurpriseJobIntentService.enqueueWork(context, jobIntent)
+
+        if (!SurpriseJobIntentService.isScheduled(context)) {
+            Log.e(LOG_TAG, "SCHEDULE NEW JOB")
+            val jobIntent = Intent(context, SurpriseJobIntentService::class.java)
+            SurpriseJobIntentService.enqueueWork(context, jobIntent)
+        } else {
+            Log.e(LOG_TAG, "JOB ALREADY SCHEDULED, SKIP")
+        }
+
+        Helpers.setAlarm(context, Constants.INTERVAL_ALARM)
     }
 
     // Executes the work inside BroadcastReceiver instead

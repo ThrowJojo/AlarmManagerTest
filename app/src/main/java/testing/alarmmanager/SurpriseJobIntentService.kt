@@ -1,5 +1,6 @@
 package testing.alarmmanager
 
+import android.app.job.JobScheduler
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.JobIntentService
@@ -15,7 +16,6 @@ class SurpriseJobIntentService : JobIntentService() {
         val current = System.currentTimeMillis()
         Log.e(LOG_TAG, "SURPRISE EXECUTED AT: $current, SETTING ANOTHER ALARM!")
         Helpers.addNewRecord(current)
-        Helpers.setAlarm(this, Constants.INTERVAL_ALARM)
     }
 
     override fun onDestroy() {
@@ -30,6 +30,13 @@ class SurpriseJobIntentService : JobIntentService() {
         // Enqueues new work
         fun enqueueWork(context: Context, intent: Intent) {
             enqueueWork(context, SurpriseJobIntentService::class.java, JOB_ID, intent)
+        }
+
+        // Checks if job has already been scheduled
+        fun isScheduled(context: Context): Boolean {
+            val scheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+            val job = scheduler.getPendingJob(JOB_ID)
+            return job != null
         }
 
     }
