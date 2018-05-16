@@ -11,7 +11,7 @@ class Receiver : BroadcastReceiver() {
     val LOG_TAG = Receiver::class.java.name
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.e(LOG_TAG, "HIT RECEIVER!")
+        Log.d(LOG_TAG, "HIT RECEIVER!")
         executeWork(context!!)
         //executeAsyncWork(context!!)
     }
@@ -20,11 +20,11 @@ class Receiver : BroadcastReceiver() {
     private fun executeWork(context: Context) {
 
         if (!SurpriseJobIntentService.isScheduled(context)) {
-            Log.e(LOG_TAG, "SCHEDULE NEW JOB")
+            Log.d(LOG_TAG, "SCHEDULE NEW JOB")
             val jobIntent = Intent(context, SurpriseJobIntentService::class.java)
             SurpriseJobIntentService.enqueueWork(context, jobIntent)
         } else {
-            Log.e(LOG_TAG, "JOB ALREADY SCHEDULED, SKIP")
+            Log.d(LOG_TAG, "JOB ALREADY SCHEDULED, SKIP")
         }
 
         Helpers.setAlarm(context, Constants.INTERVAL_ALARM)
@@ -36,7 +36,7 @@ class Receiver : BroadcastReceiver() {
         val result = goAsync()
         thread(start = true) {
             val current = System.currentTimeMillis()
-            Log.e(LOG_TAG, "SURPRISE EXECUTED AT: $current, SETTING ANOTHER ALARM!")
+            Log.d(LOG_TAG, "SURPRISE EXECUTED AT: $current, SETTING ANOTHER ALARM!")
             Helpers.addNewRecord(current)
             Helpers.setAlarm(context, Constants.INTERVAL_ALARM)
             result.finish()

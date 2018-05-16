@@ -16,12 +16,12 @@ class MainActivity : AppCompatActivity() {
         val records = Paper.book().read<List<Record>>(Constants.KEY_RECORDS, mutableListOf())
 
         // Print out some record information
-        Log.e(LOG_TAG, "NUMBER OF RECORDS: ${records.size}")
+        Log.d(LOG_TAG, "NUMBER OF RECORDS: ${records.size}")
         if (!records.isEmpty()) {
-            Log.e(LOG_TAG, "*** LAST EXECUTIONS ***")
+            Log.d(LOG_TAG, "*** LAST EXECUTIONS ***")
             val tailRecords = records.takeLast(10)
             tailRecords.forEach {it ->
-                Log.e(LOG_TAG, "${records.indexOf(it)}: ${it.timestamp}")
+                Log.d(LOG_TAG, "${records.indexOf(it)}: ${it.timestamp}")
             }
         }
     }

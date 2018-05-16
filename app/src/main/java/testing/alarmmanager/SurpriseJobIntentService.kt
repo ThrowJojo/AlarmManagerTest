@@ -14,13 +14,13 @@ class SurpriseJobIntentService : JobIntentService() {
     // Work is done on new thread
     override fun onHandleWork(intent: Intent) {
         val current = System.currentTimeMillis()
-        Log.e(LOG_TAG, "SURPRISE EXECUTED AT: $current, SETTING ANOTHER ALARM!")
+        Log.d(LOG_TAG, "SURPRISE EXECUTED AT: $current, SETTING ANOTHER ALARM!")
         Helpers.addNewRecord(current)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e(LOG_TAG, "WORK FINISHED")
+        Log.d(LOG_TAG, "WORK FINISHED")
     }
 
     companion object {
